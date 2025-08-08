@@ -16,28 +16,553 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="CSS/web.css" rel="stylesheet">
-    <title>Loka Medicals-Admin</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Loka Medicals - Admin Dashboard</title>
   </head>
   <body>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     
     <div class="container-fluid">
       <div class="row">
-        <div clss="col-2">
-          <div class="row">
-            <div clss="col-12">
-              <a href="#">Add Staff</a>
+        <!-- Sidebar -->
+        <div class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse" style="min-height: 100vh;">
+          <div class="position-sticky pt-3">
+            <div class="text-center mb-4">
+              <i class="fas fa-hospital-alt text-white" style="font-size: 2rem;"></i>
+              <h5 class="text-white mt-2">Loka Medicals</h5>
+              <p class="text-muted small">Admin Dashboard</p>
             </div>
-            <div clss="col-12">
-              <a href="#">List of Staff</a>
-            </div>
-            <div clss="col-12">
-              <a href="#">Logout</a>
-            </div>
-            </div>
+            
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link text-white active" href="#" onclick="showDashboard()">
+                  <i class="fas fa-tachometer-alt me-2"></i>
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#" onclick="showManageStaff()">
+                  <i class="fas fa-users me-2"></i>
+                  Manage Staff
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-white" href="#" onclick="showManagePatients()">
+                  <i class="fas fa-user-injured me-2"></i>
+                  Manage Patients
+                </a>
+              </li>
+              <li class="nav-item mt-4">
+                <a class="nav-link text-danger" href="login.html">
+                  <i class="fas fa-sign-out-alt me-2"></i>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
+        <!-- Main Content -->
+        <div class="col-md-9 col-lg-10 ms-sm-auto px-md-4">
+          <!-- Top Navigation -->
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2" id="pageTitle">Dashboard</h1>
+            <div class="btn-toolbar mb-2 mb-md-0">
+              <div class="btn-group me-2">
+                <span class="text-muted">Welcome, Admin</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dashboard Content -->
+          <div id="dashboardContent">
+            <div class="row">
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                          Total Staff</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">25</div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                          Total Patients</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-user-injured fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                          Appointments Today</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                  <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                          Revenue (Monthly)</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">₹40,00,000</div>
+                      </div>
+                      <div class="col-auto">
+                        <i class="fas fa-rupee-sign fa-2x text-gray-300"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Recent Activities</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="list-group list-group-flush">
+                      <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                          <strong>New patient registered</strong>
+                          <br><small class="text-muted">John Doe - Cardiology</small>
+                        </div>
+                        <span class="badge bg-primary rounded-pill">2 min ago</span>
+                      </div>
+                      <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                          <strong>Appointment scheduled</strong>
+                          <br><small class="text-muted">Dr. Sarah Johnson - 2:30 PM</small>
+                        </div>
+                        <span class="badge bg-success rounded-pill">15 min ago</span>
+                      </div>
+                      <div class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                          <strong>Staff member added</strong>
+                          <br><small class="text-muted">Nurse Maria Garcia</small>
+                        </div>
+                        <span class="badge bg-info rounded-pill">1 hour ago</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Quick Actions</h6>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-6 mb-3">
+                        <button class="btn btn-primary w-100" onclick="showManageStaff()">
+                          <i class="fas fa-user-plus me-2"></i>Add Staff
+                        </button>
+                      </div>
+                      <div class="col-6 mb-3">
+                        <button class="btn btn-success w-100" onclick="showManagePatients()">
+                          <i class="fas fa-user-plus me-2"></i>Add Patient
+                        </button>
+                      </div>
+                      <div class="col-6 mb-3">
+                        <button class="btn btn-info w-100">
+                          <i class="fas fa-calendar-plus me-2"></i>Schedule Appointment
+                        </button>
+                      </div>
+                      <div class="col-6 mb-3">
+                        <button class="btn btn-warning w-100">
+                          <i class="fas fa-chart-bar me-2"></i>View Reports
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Manage Staff Content -->
+          <div id="staffContent" style="display: none;">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h4>Staff Management</h4>
+              </div>
+              <div class="col-md-6 text-end">
+                <button class="btn btn-primary" onclick="showAddStaffForm()">
+                  <i class="fas fa-plus me-2"></i>Add New Staff
+                </button>
+              </div>
+            </div>
+
+            <!-- Add Staff Form -->
+            <div id="addStaffForm" style="display: none;" class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Add New Staff Member</h5>
+              </div>
+              <div class="card-body">
+                <form id="staffForm">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="staffName" class="form-label">Full Name</label>
+                      <input type="text" class="form-control" id="staffName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="staffEmail" class="form-label">Email</label>
+                      <input type="email" class="form-control" id="staffEmail" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="staffPhone" class="form-label">Phone</label>
+                      <input type="tel" class="form-control" id="staffPhone" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="staffRole" class="form-label">Role</label>
+                      <select class="form-select" id="staffRole" required>
+                        <option value="">Select Role</option>
+                        <option value="Doctor">Doctor</option>
+                        <option value="Nurse">Nurse</option>
+                        <option value="Receptionist">Receptionist</option>
+                        <option value="Admin">Admin</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="staffDepartment" class="form-label">Department</label>
+                      <select class="form-select" id="staffDepartment" required>
+                        <option value="">Select Department</option>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Neurology">Neurology</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="General">General</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="staffSalary" class="form-label">Salary</label>
+                      <input type="number" class="form-control" id="staffSalary" required>
+                    </div>
+                  </div>
+                  <div class="text-end">
+                    <button type="button" class="btn btn-secondary me-2" onclick="hideAddStaffForm()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add Staff</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Staff List -->
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Staff List</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="staffTableBody">
+                      <tr>
+                        <td>Dr. Sarah Johnson</td>
+                        <td><span class="badge bg-primary">Doctor</span></td>
+                        <td>Cardiology</td>
+                        <td>sarah.johnson@lokamedicals.com</td>
+                        <td>+1 234 567 8901</td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-primary me-1">Edit</button>
+                          <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Nurse Maria Garcia</td>
+                        <td><span class="badge bg-success">Nurse</span></td>
+                        <td>General</td>
+                        <td>maria.garcia@lokamedicals.com</td>
+                        <td>+1 234 567 8902</td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-primary me-1">Edit</button>
+                          <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>John Smith</td>
+                        <td><span class="badge bg-info">Receptionist</span></td>
+                        <td>General</td>
+                        <td>john.smith@lokamedicals.com</td>
+                        <td>+1 234 567 8903</td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-primary me-1">Edit</button>
+                          <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Manage Patients Content -->
+          <div id="patientsContent" style="display: none;">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <h4>Patient Management</h4>
+              </div>
+              <div class="col-md-6 text-end">
+                <button class="btn btn-success" onclick="showAddPatientForm()">
+                  <i class="fas fa-plus me-2"></i>Add New Patient
+                </button>
+              </div>
+            </div>
+
+            <!-- Add Patient Form -->
+            <div id="addPatientForm" style="display: none;" class="card mb-4">
+              <div class="card-header">
+                <h5 class="mb-0">Add New Patient</h5>
+              </div>
+              <div class="card-body">
+                <form id="patientForm">
+                  <div class="row">
+                    <div class="col-md-6 mb-3">
+                      <label for="patientName" class="form-label">Full Name</label>
+                      <input type="text" class="form-control" id="patientName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="patientEmail" class="form-label">Email</label>
+                      <input type="email" class="form-control" id="patientEmail" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="patientPhone" class="form-label">Phone</label>
+                      <input type="tel" class="form-control" id="patientPhone" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="patientDOB" class="form-label">Date of Birth</label>
+                      <input type="date" class="form-control" id="patientDOB" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="patientGender" class="form-label">Gender</label>
+                      <select class="form-select" id="patientGender" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="patientBloodGroup" class="form-label">Blood Group</label>
+                      <select class="form-select" id="patientBloodGroup" required>
+                        <option value="">Select Blood Group</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                      </select>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <label for="patientAddress" class="form-label">Address</label>
+                      <textarea class="form-control" id="patientAddress" rows="3" required></textarea>
+                    </div>
+                  </div>
+                  <div class="text-end">
+                    <button type="button" class="btn btn-secondary me-2" onclick="hideAddPatientForm()">Cancel</button>
+                    <button type="submit" class="btn btn-success">Add Patient</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <!-- Patient List -->
+            <div class="card">
+              <div class="card-header">
+                <h5 class="mb-0">Patient List</h5>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Blood Group</th>
+                        <th>Phone</th>
+                        <th>Last Visit</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="patientTableBody">
+                      <tr>
+                        <td>John Doe</td>
+                        <td>35</td>
+                        <td>Male</td>
+                        <td><span class="badge bg-danger">A+</span></td>
+                        <td>+1 234 567 8904</td>
+                        <td>2024-01-15</td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-primary me-1">View</button>
+                          <button class="btn btn-sm btn-outline-success me-1">Edit</button>
+                          <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Jane Smith</td>
+                        <td>28</td>
+                        <td>Female</td>
+                        <td><span class="badge bg-success">O+</span></td>
+                        <td>+1 234 567 8905</td>
+                        <td>2024-01-10</td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-primary me-1">View</button>
+                          <button class="btn btn-sm btn-outline-success me-1">Edit</button>
+                          <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Mike Johnson</td>
+                        <td>42</td>
+                        <td>Male</td>
+                        <td><span class="badge bg-info">B+</span></td>
+                        <td>+1 234 567 8906</td>
+                        <td>2024-01-08</td>
+                        <td>
+                          <button class="btn btn-sm btn-outline-primary me-1">View</button>
+                          <button class="btn btn-sm btn-outline-success me-1">Edit</button>
+                          <button class="btn btn-sm btn-outline-danger">Delete</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <script>
+      // Navigation functions
+      function showDashboard() {
+        document.getElementById('dashboardContent').style.display = 'block';
+        document.getElementById('staffContent').style.display = 'none';
+        document.getElementById('patientsContent').style.display = 'none';
+        document.getElementById('pageTitle').textContent = 'Dashboard';
+        updateActiveNav('dashboard');
+      }
+
+      function showManageStaff() {
+        document.getElementById('dashboardContent').style.display = 'none';
+        document.getElementById('staffContent').style.display = 'block';
+        document.getElementById('patientsContent').style.display = 'none';
+        document.getElementById('pageTitle').textContent = 'Manage Staff';
+        updateActiveNav('staff');
+      }
+
+      function showManagePatients() {
+        document.getElementById('dashboardContent').style.display = 'none';
+        document.getElementById('staffContent').style.display = 'none';
+        document.getElementById('patientsContent').style.display = 'block';
+        document.getElementById('pageTitle').textContent = 'Manage Patients';
+        updateActiveNav('patients');
+      }
+
+      function updateActiveNav(section) {
+        // Remove active class from all nav links
+        document.querySelectorAll('.nav-link').forEach(link => {
+          link.classList.remove('active');
+        });
+        
+        // Add active class to current section
+        if (section === 'dashboard') {
+          document.querySelector('.nav-link[onclick="showDashboard()"]').classList.add('active');
+        } else if (section === 'staff') {
+          document.querySelector('.nav-link[onclick="showManageStaff()"]').classList.add('active');
+        } else if (section === 'patients') {
+          document.querySelector('.nav-link[onclick="showManagePatients()"]').classList.add('active');
+        }
+      }
+
+      // Staff management functions
+      function showAddStaffForm() {
+        document.getElementById('addStaffForm').style.display = 'block';
+      }
+
+      function hideAddStaffForm() {
+        document.getElementById('addStaffForm').style.display = 'none';
+        document.getElementById('staffForm').reset();
+      }
+
+      // Patient management functions
+      function showAddPatientForm() {
+        document.getElementById('addPatientForm').style.display = 'block';
+      }
+
+      function hideAddPatientForm() {
+        document.getElementById('addPatientForm').style.display = 'none';
+        document.getElementById('patientForm').reset();
+      }
+
+      // Form submissions
+      document.getElementById('staffForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Here you would typically send data to server
+        alert('Staff member added successfully!');
+        hideAddStaffForm();
+        // Refresh staff list or add to table
+      });
+
+      document.getElementById('patientForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Here you would typically send data to server
+        alert('Patient added successfully!');
+        hideAddPatientForm();
+        // Refresh patient list or add to table
+      });
+
+      // Initialize dashboard
+      showDashboard();
+    </script>
   </body>
 </html>

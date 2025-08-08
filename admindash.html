@@ -10,7 +10,7 @@
      <link rel="canonical" href="http://clinic-web-eight.vercel.app/">
      <meta property="og:title" content="Loka Medicals">
      <meta property="og:description" content="Delivering compassionate, expert care with advanced technology for a healthier tomorrow.">
-     <meta name="feo.region" content="IN-KL">
+     <meta name="geo.region" content="IN-KL">
      <meta name="geo.placename" content="Trivandrum">
 
     <!-- Bootstrap CSS -->
@@ -25,8 +25,15 @@
     
     <div class="container-fluid">
       <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse" style="min-height: 100vh;">
+        <!-- Mobile Menu Button -->
+        <div class="d-md-none position-fixed top-0 start-0 p-3" style="z-index: 1050;">
+          <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Sidebar for Desktop -->
+        <div class="col-md-3 col-lg-2 d-none d-md-block bg-dark sidebar" style="min-height: 100vh;">
           <div class="position-sticky pt-3">
             <div class="text-center mb-4">
               <i class="fas fa-hospital-alt text-white" style="font-size: 2rem;"></i>
@@ -47,12 +54,45 @@
                   Manage Staff
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="#" onclick="showManagePatients()">
-                  <i class="fas fa-user-injured me-2"></i>
-                  Manage Patients
+
+              <li class="nav-item mt-4">
+                <a class="nav-link text-danger" href="login.html">
+                  <i class="fas fa-sign-out-alt me-2"></i>
+                  Logout
                 </a>
               </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Mobile Sidebar Offcanvas -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">
+              <i class="fas fa-hospital-alt text-primary me-2"></i>
+              Loka Medicals
+            </h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <div class="text-center mb-4">
+              <p class="text-muted small">Admin Dashboard</p>
+            </div>
+            
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link text-dark active" href="#" onclick="showDashboard(); closeMobileMenu();">
+                  <i class="fas fa-tachometer-alt me-2"></i>
+                  Dashboard
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-dark" href="#" onclick="showManageStaff(); closeMobileMenu();">
+                  <i class="fas fa-users me-2"></i>
+                  Manage Staff
+                </a>
+              </li>
+
               <li class="nav-item mt-4">
                 <a class="nav-link text-danger" href="login.html">
                   <i class="fas fa-sign-out-alt me-2"></i>
@@ -64,7 +104,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="col-md-9 col-lg-10 ms-sm-auto px-md-4">
+        <div class="col-12 col-md-9 col-lg-10 ms-sm-auto px-md-4">
           <!-- Top Navigation -->
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2" id="pageTitle">Dashboard</h1>
@@ -192,11 +232,7 @@
                           <i class="fas fa-user-plus me-2"></i>Add Staff
                         </button>
                       </div>
-                      <div class="col-6 mb-3">
-                        <button class="btn btn-success w-100" onclick="showManagePatients()">
-                          <i class="fas fa-user-plus me-2"></i>Add Patient
-                        </button>
-                      </div>
+                      
                       <div class="col-6 mb-3">
                         <button class="btn btn-info w-100">
                           <i class="fas fa-calendar-plus me-2"></i>Schedule Appointment
@@ -249,7 +285,7 @@
                     </div>
                     <div class="col-md-6 mb-3">
                       <label for="staffRole" class="form-label">Role</label>
-                      <select class="form-select" id="staffRole" required>
+                      <select class="form-select" id="staffRole" required onchange="toggleDepartmentField()">
                         <option value="">Select Role</option>
                         <option value="Doctor">Doctor</option>
                         <option value="Nurse">Nurse</option>
@@ -257,9 +293,9 @@
                         <option value="Admin">Admin</option>
                       </select>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6 mb-3" id="departmentField">
                       <label for="staffDepartment" class="form-label">Department</label>
-                      <select class="form-select" id="staffDepartment" required>
+                      <select class="form-select" id="staffDepartment">
                         <option value="">Select Department</option>
                         <option value="Cardiology">Cardiology</option>
                         <option value="Neurology">Neurology</option>
@@ -271,6 +307,24 @@
                     <div class="col-md-6 mb-3">
                       <label for="staffSalary" class="form-label">Salary</label>
                       <input type="number" class="form-control" id="staffSalary" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="generatedUsername" class="form-label">Generated Username</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="generatedUsername" readonly>
+                        <button class="btn copy-btn" type="button" onclick="copyToClipboard('generatedUsername')">
+                          <i class="fas fa-copy"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                      <label for="generatedPassword" class="form-label">Generated Password</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control" id="generatedPassword" readonly>
+                        <button class="btn copy-btn" type="button" onclick="copyToClipboard('generatedPassword')">
+                          <i class="fas fa-copy"></i>
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div class="text-end">
@@ -340,144 +394,7 @@
             </div>
           </div>
 
-          <!-- Manage Patients Content -->
-          <div id="patientsContent" style="display: none;">
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <h4>Patient Management</h4>
-              </div>
-              <div class="col-md-6 text-end">
-                <button class="btn btn-success" onclick="showAddPatientForm()">
-                  <i class="fas fa-plus me-2"></i>Add New Patient
-                </button>
-              </div>
-            </div>
-
-            <!-- Add Patient Form -->
-            <div id="addPatientForm" style="display: none;" class="card mb-4">
-              <div class="card-header">
-                <h5 class="mb-0">Add New Patient</h5>
-              </div>
-              <div class="card-body">
-                <form id="patientForm">
-                  <div class="row">
-                    <div class="col-md-6 mb-3">
-                      <label for="patientName" class="form-label">Full Name</label>
-                      <input type="text" class="form-control" id="patientName" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="patientEmail" class="form-label">Email</label>
-                      <input type="email" class="form-control" id="patientEmail" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="patientPhone" class="form-label">Phone</label>
-                      <input type="tel" class="form-control" id="patientPhone" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="patientDOB" class="form-label">Date of Birth</label>
-                      <input type="date" class="form-control" id="patientDOB" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="patientGender" class="form-label">Gender</label>
-                      <select class="form-select" id="patientGender" required>
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="patientBloodGroup" class="form-label">Blood Group</label>
-                      <select class="form-select" id="patientBloodGroup" required>
-                        <option value="">Select Blood Group</option>
-                        <option value="A+">A+</option>
-                        <option value="A-">A-</option>
-                        <option value="B+">B+</option>
-                        <option value="B-">B-</option>
-                        <option value="AB+">AB+</option>
-                        <option value="AB-">AB-</option>
-                        <option value="O+">O+</option>
-                        <option value="O-">O-</option>
-                      </select>
-                    </div>
-                    <div class="col-12 mb-3">
-                      <label for="patientAddress" class="form-label">Address</label>
-                      <textarea class="form-control" id="patientAddress" rows="3" required></textarea>
-                    </div>
-                  </div>
-                  <div class="text-end">
-                    <button type="button" class="btn btn-secondary me-2" onclick="hideAddPatientForm()">Cancel</button>
-                    <button type="submit" class="btn btn-success">Add Patient</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-
-            <!-- Patient List -->
-            <div class="card">
-              <div class="card-header">
-                <h5 class="mb-0">Patient List</h5>
-              </div>
-              <div class="card-body">
-                <div class="table-responsive">
-                  <table class="table table-striped">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Age</th>
-                        <th>Gender</th>
-                        <th>Blood Group</th>
-                        <th>Phone</th>
-                        <th>Last Visit</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody id="patientTableBody">
-                      <tr>
-                        <td>John Doe</td>
-                        <td>35</td>
-                        <td>Male</td>
-                        <td><span class="badge bg-danger">A+</span></td>
-                        <td>+1 234 567 8904</td>
-                        <td>2024-01-15</td>
-                        <td>
-                          <button class="btn btn-sm btn-outline-primary me-1">View</button>
-                          <button class="btn btn-sm btn-outline-success me-1">Edit</button>
-                          <button class="btn btn-sm btn-outline-danger">Delete</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Jane Smith</td>
-                        <td>28</td>
-                        <td>Female</td>
-                        <td><span class="badge bg-success">O+</span></td>
-                        <td>+1 234 567 8905</td>
-                        <td>2024-01-10</td>
-                        <td>
-                          <button class="btn btn-sm btn-outline-primary me-1">View</button>
-                          <button class="btn btn-sm btn-outline-success me-1">Edit</button>
-                          <button class="btn btn-sm btn-outline-danger">Delete</button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Mike Johnson</td>
-                        <td>42</td>
-                        <td>Male</td>
-                        <td><span class="badge bg-info">B+</span></td>
-                        <td>+1 234 567 8906</td>
-                        <td>2024-01-08</td>
-                        <td>
-                          <button class="btn btn-sm btn-outline-primary me-1">View</button>
-                          <button class="btn btn-sm btn-outline-success me-1">Edit</button>
-                          <button class="btn btn-sm btn-outline-danger">Delete</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -492,37 +409,26 @@
         updateActiveNav('dashboard');
       }
 
-      function showManageStaff() {
-        document.getElementById('dashboardContent').style.display = 'none';
-        document.getElementById('staffContent').style.display = 'block';
-        document.getElementById('patientsContent').style.display = 'none';
-        document.getElementById('pageTitle').textContent = 'Manage Staff';
-        updateActiveNav('staff');
-      }
+             function showManageStaff() {
+         document.getElementById('dashboardContent').style.display = 'none';
+         document.getElementById('staffContent').style.display = 'block';
+         document.getElementById('pageTitle').textContent = 'Manage Staff';
+         updateActiveNav('staff');
+       }
 
-      function showManagePatients() {
-        document.getElementById('dashboardContent').style.display = 'none';
-        document.getElementById('staffContent').style.display = 'none';
-        document.getElementById('patientsContent').style.display = 'block';
-        document.getElementById('pageTitle').textContent = 'Manage Patients';
-        updateActiveNav('patients');
-      }
-
-      function updateActiveNav(section) {
-        // Remove active class from all nav links
-        document.querySelectorAll('.nav-link').forEach(link => {
-          link.classList.remove('active');
-        });
-        
-        // Add active class to current section
-        if (section === 'dashboard') {
-          document.querySelector('.nav-link[onclick="showDashboard()"]').classList.add('active');
-        } else if (section === 'staff') {
-          document.querySelector('.nav-link[onclick="showManageStaff()"]').classList.add('active');
-        } else if (section === 'patients') {
-          document.querySelector('.nav-link[onclick="showManagePatients()"]').classList.add('active');
-        }
-      }
+             function updateActiveNav(section) {
+         // Remove active class from all nav links
+         document.querySelectorAll('.nav-link').forEach(link => {
+           link.classList.remove('active');
+         });
+         
+         // Add active class to current section
+         if (section === 'dashboard') {
+           document.querySelector('.nav-link[onclick="showDashboard()"]').classList.add('active');
+         } else if (section === 'staff') {
+           document.querySelector('.nav-link[onclick="showManageStaff()"]').classList.add('active');
+         }
+       }
 
       // Staff management functions
       function showAddStaffForm() {
@@ -534,35 +440,266 @@
         document.getElementById('staffForm').reset();
       }
 
-      // Patient management functions
-      function showAddPatientForm() {
-        document.getElementById('addPatientForm').style.display = 'block';
-      }
-
-      function hideAddPatientForm() {
-        document.getElementById('addPatientForm').style.display = 'none';
-        document.getElementById('patientForm').reset();
-      }
+      
 
       // Form submissions
       document.getElementById('staffForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        // Here you would typically send data to server
-        alert('Staff member added successfully!');
+        
+        // Get form data
+        const staffData = {
+          name: document.getElementById('staffName').value,
+          email: document.getElementById('staffEmail').value,
+          phone: document.getElementById('staffPhone').value,
+          role: document.getElementById('staffRole').value,
+          department: document.getElementById('staffDepartment').value,
+          salary: document.getElementById('staffSalary').value,
+          username: document.getElementById('generatedUsername').value,
+          password: document.getElementById('generatedPassword').value
+        };
+        
+        // Validate form
+        if (!validateStaffForm(staffData)) {
+          return;
+        }
+        
+        // Add to staff table
+        addStaffToTable(staffData);
+        
+        // Show success message with credentials
+        showStaffSuccessMessage(staffData);
+        
         hideAddStaffForm();
-        // Refresh staff list or add to table
       });
 
-      document.getElementById('patientForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Here you would typically send data to server
-        alert('Patient added successfully!');
-        hideAddPatientForm();
-        // Refresh patient list or add to table
-      });
+      
+
+      // Mobile menu function
+      function closeMobileMenu() {
+        const offcanvas = document.getElementById('sidebarOffcanvas');
+        const bsOffcanvas = bootstrap.Offcanvas.getInstance(offcanvas);
+        if (bsOffcanvas) {
+          bsOffcanvas.hide();
+        }
+      }
 
       // Initialize dashboard
       showDashboard();
+
+      // Add event listeners for auto-generating credentials
+      document.addEventListener('DOMContentLoaded', function() {
+        const staffForm = document.getElementById('staffForm');
+        if (staffForm) {
+          staffForm.addEventListener('input', generateCredentials);
+        }
+      });
+
+      // New functions for staff management
+             function toggleDepartmentField() {
+         const roleSelect = document.getElementById('staffRole');
+         const departmentField = document.getElementById('departmentField');
+         const departmentSelect = document.getElementById('staffDepartment');
+
+         if (roleSelect.value === 'Receptionist' || roleSelect.value === 'Admin') {
+           departmentField.classList.add('hidden');
+           departmentSelect.value = ''; // Clear department if hidden
+           departmentSelect.removeAttribute('required'); // Remove required attribute
+         } else {
+           departmentField.classList.remove('hidden');
+           departmentSelect.setAttribute('required', 'required'); // Add required attribute back
+         }
+         
+         // Generate credentials when role changes
+         generateCredentials();
+       }
+
+             function generateCredentials() {
+         const staffName = document.getElementById('staffName').value;
+         const staffRole = document.getElementById('staffRole').value;
+         const staffDepartment = document.getElementById('staffDepartment').value;
+
+         if (!staffName || !staffRole) {
+           document.getElementById('generatedUsername').value = '';
+           document.getElementById('generatedPassword').value = '';
+           return;
+         }
+
+         // Generate 6-digit username
+         let username = '';
+         if (staffRole === 'Receptionist' || staffRole === 'Admin') {
+           // Use "loka" as department for receptionist and admin
+           username = generateUsername('loka', staffRole, staffName);
+         } else {
+           username = generateUsername(staffDepartment, staffRole, staffName);
+         }
+
+         // Generate 6-letter password with uppercase, lowercase, and special character
+         const password = generatePassword();
+
+         document.getElementById('generatedUsername').value = username;
+         document.getElementById('generatedPassword').value = password;
+       }
+
+       function generateUsername(department, role, fullName) {
+         // Create base from department, role, and name
+         const deptCode = department ? department.substring(0, 2).toLowerCase() : 'lo';
+         const roleCode = role.substring(0, 2).toLowerCase();
+         const nameCode = fullName.replace(/\s/g, '').substring(0, 2).toLowerCase();
+         
+         // Generate a random 3-digit number to make it 6 digits total
+         const randomNum = Math.floor(Math.random() * 900) + 100;
+         
+         return (deptCode + roleCode + nameCode + randomNum).substring(0, 6);
+       }
+
+       function generatePassword() {
+         const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+         const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+         const special = '!@#$%^&*';
+         
+         let password = '';
+         
+         // Ensure at least one of each type
+         password += uppercase[Math.floor(Math.random() * uppercase.length)];
+         password += lowercase[Math.floor(Math.random() * lowercase.length)];
+         password += special[Math.floor(Math.random() * special.length)];
+         
+         // Fill remaining 3 characters randomly
+         const allChars = uppercase + lowercase + special;
+         for (let i = 0; i < 3; i++) {
+           password += allChars[Math.floor(Math.random() * allChars.length)];
+         }
+         
+         // Shuffle the password
+         return password.split('').sort(() => Math.random() - 0.5).join('');
+       }
+
+             function copyToClipboard(id) {
+         const text = document.getElementById(id).value;
+         navigator.clipboard.writeText(text).then(() => {
+           showAlert('Credentials copied to clipboard!', 'success');
+         }).catch(err => {
+           console.error('Failed to copy credentials: ', err);
+           showAlert('Failed to copy credentials', 'danger');
+         });
+       }
+
+       function addStaffToTable(staffData) {
+         const tableBody = document.getElementById('staffTableBody');
+         const newRow = document.createElement('tr');
+         
+         const roleBadge = getRoleBadge(staffData.role);
+         const department = staffData.role === 'Receptionist' || staffData.role === 'Admin' ? 'General' : staffData.department;
+         
+         newRow.innerHTML = `
+           <td>${staffData.name}</td>
+           <td>${roleBadge}</td>
+           <td>${department}</td>
+           <td>${staffData.email}</td>
+           <td>${staffData.phone}</td>
+           <td>
+             <button class="btn btn-sm btn-outline-primary me-1">Edit</button>
+             <button class="btn btn-sm btn-outline-danger">Delete</button>
+           </td>
+         `;
+         
+         tableBody.appendChild(newRow);
+       }
+
+       function getRoleBadge(role) {
+         const badges = {
+           'Doctor': '<span class="badge bg-primary">Doctor</span>',
+           'Nurse': '<span class="badge bg-success">Nurse</span>',
+           'Receptionist': '<span class="badge bg-info">Receptionist</span>',
+           'Admin': '<span class="badge bg-warning">Admin</span>'
+         };
+         return badges[role] || '<span class="badge bg-secondary">Staff</span>';
+       }
+
+       function showStaffSuccessMessage(staffData) {
+         const successAlert = document.createElement('div');
+         successAlert.className = 'alert alert-success alert-dismissible fade show position-fixed';
+         successAlert.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 400px; max-width: 500px;';
+         successAlert.innerHTML = `
+           <div class="d-flex align-items-start">
+             <i class="fas fa-check-circle me-2 mt-1" style="font-size: 1.2rem;"></i>
+             <div class="flex-grow-1">
+               <strong>Staff Member Added Successfully!</strong><br>
+               <small class="text-muted">
+                 <strong>Name:</strong> ${staffData.name}<br>
+                 <strong>Role:</strong> ${staffData.role}<br>
+                 <strong>Username:</strong> ${staffData.username}<br>
+                 <strong>Password:</strong> ${staffData.password}<br>
+                 <em>Please save these credentials securely!</em>
+               </small>
+             </div>
+           </div>
+           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+         `;
+         
+         document.body.appendChild(successAlert);
+         setTimeout(() => { 
+           if (successAlert.parentNode) { 
+             successAlert.remove(); 
+           } 
+         }, 8000);
+       }
+
+       function validateStaffForm(staffData) {
+         // Check if all required fields are filled
+         if (!staffData.name || !staffData.email || !staffData.phone || !staffData.role || !staffData.salary) {
+           showAlert('Please fill in all required fields', 'danger');
+           return false;
+         }
+         
+         // Check if department is required but not filled
+         if (staffData.role !== 'Receptionist' && staffData.role !== 'Admin' && !staffData.department) {
+           showAlert('Please select a department for this role', 'danger');
+           return false;
+         }
+         
+         // Validate email format
+         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+         if (!emailRegex.test(staffData.email)) {
+           showAlert('Please enter a valid email address', 'danger');
+           return false;
+         }
+         
+         // Validate phone number (basic validation)
+         const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+         if (!phoneRegex.test(staffData.phone.replace(/\s/g, ''))) {
+           showAlert('Please enter a valid phone number', 'danger');
+           return false;
+         }
+         
+         // Validate salary
+         if (staffData.salary <= 0) {
+           showAlert('Please enter a valid salary amount', 'danger');
+           return false;
+         }
+         
+         return true;
+       }
+
+       function showAlert(message, type = 'info') {
+         const alert = document.createElement('div');
+         alert.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+         alert.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+         alert.innerHTML = `
+           <div class="d-flex align-items-center">
+             <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-triangle' : 'info-circle'} me-2" style="font-size: 1.2rem;"></i>
+             <div>${message}</div>
+           </div>
+           <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+         `;
+         
+         document.body.appendChild(alert);
+         setTimeout(() => { 
+           if (alert.parentNode) { 
+             alert.remove(); 
+           } 
+         }, 5000);
+       }
     </script>
   </body>
 </html>

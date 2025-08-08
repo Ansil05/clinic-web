@@ -622,6 +622,11 @@ body {
     .navbar-nav .nav-link {
         padding: 0.75rem 1rem !important;
         text-align: center;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
+    }
+    
+    .navbar-nav .nav-link:last-child {
+        border-bottom: none;
     }
     
     .hero-section {
@@ -636,11 +641,6 @@ body {
         margin-bottom: 2rem;
     }
     
-    .sidebar {
-        position: static;
-        min-height: auto;
-    }
-    
     .btn {
         padding: 0.5rem 1.5rem;
         font-size: 0.9rem;
@@ -650,6 +650,101 @@ body {
         width: 60px;
         height: 60px;
         font-size: 2rem;
+    }
+
+    /* Mobile menu button styles */
+    .navbar-toggler {
+        border: none;
+        padding: 0.5rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+
+    .navbar-toggler:hover {
+        background-color: var(--hospital-light);
+    }
+
+    /* Offcanvas styles */
+    .offcanvas {
+        background: var(--hospital-white);
+        border-right: 1px solid var(--hospital-light);
+    }
+
+    .offcanvas-header {
+        background: linear-gradient(135deg, var(--hospital-primary), var(--hospital-secondary));
+        color: var(--hospital-white);
+    }
+
+    .offcanvas-title {
+        color: var(--hospital-white) !important;
+    }
+
+    .offcanvas .nav-link {
+        color: var(--hospital-dark) !important;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--hospital-light);
+        transition: all 0.3s ease;
+    }
+
+    .offcanvas .nav-link:hover {
+        background-color: var(--hospital-light);
+        color: var(--hospital-primary) !important;
+        padding-left: 1rem;
+    }
+
+    .offcanvas .nav-link.active {
+        background-color: var(--hospital-light-blue);
+        color: var(--hospital-primary) !important;
+        border-left: 4px solid var(--hospital-primary);
+    }
+
+    /* Mobile menu button positioning */
+    .mobile-menu-btn {
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1050;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+        background-color: var(--hospital-primary);
+        border: none;
+        color: white;
+    }
+
+    .mobile-menu-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        background-color: var(--hospital-secondary);
+        color: white;
+    }
+
+    .mobile-menu-btn:focus {
+        box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    }
+
+    /* Add top padding to main content on mobile to avoid hamburger menu overlap */
+    .admin-content {
+        padding-top: 80px !important;
+    }
+
+    /* Ensure the main content area has proper spacing */
+    .col-12.col-md-9.col-lg-10 {
+        padding-top: 80px;
+    }
+
+    /* Ensure the top navigation bar doesn't get hidden */
+    .d-flex.justify-content-between.flex-wrap.flex-md-nowrap.align-items-center {
+        margin-top: 0;
     }
 }
 
@@ -669,6 +764,50 @@ body {
     
     .table-responsive {
         font-size: 0.9rem;
+    }
+
+    /* Extra small screen adjustments */
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .navbar-brand i {
+        font-size: 1.5rem;
+    }
+
+    .hero-section .btn {
+        font-size: 0.9rem;
+        padding: 0.75rem 1.5rem;
+    }
+
+    .card-body {
+        padding: 1.5rem;
+    }
+
+    .speciality-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+
+    .doctor-image {
+        width: 100px !important;
+        height: 100px !important;
+    }
+
+    /* Additional mobile spacing for admin dashboard */
+    .col-12.col-md-9.col-lg-10 {
+        padding-top: 90px;
+    }
+
+    .admin-content {
+        padding-top: 90px !important;
+    }
+
+    /* Ensure mobile menu button doesn't overlap content */
+    .mobile-menu-btn {
+        top: 0.5rem;
+        left: 0.5rem;
     }
 }
 
@@ -847,4 +986,252 @@ footer a:hover {
     border-color: var(--success-color);
     color: var(--success-color);
     animation: slideInRight 0.5s ease-in-out;
+}
+
+/* Appointment Modal Styles */
+.modal-content {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(44, 62, 80, 0.15);
+}
+
+.modal-header {
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+}
+
+.modal-footer {
+    border-radius: 0 0 20px 20px;
+    border-top: none;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+/* Doctor Card Enhancement */
+.doctor-card {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.doctor-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.doctor-card:hover::before {
+    left: 100%;
+}
+
+.doctor-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(44, 62, 80, 0.2);
+}
+
+.doctor-card .btn {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.doctor-card:hover .btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Form Enhancement */
+.form-control:focus, .form-select:focus {
+    border-color: var(--hospital-secondary);
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+    transform: translateY(-2px);
+}
+
+.form-check-input:checked {
+    background-color: var(--hospital-secondary);
+    border-color: var(--hospital-secondary);
+}
+
+/* Success Alert Animation */
+@keyframes slideInFromRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.alert.position-fixed {
+    animation: slideInFromRight 0.5s ease-in-out;
+}
+
+/* Staff Management Styles */
+.staff-form-section {
+    background: linear-gradient(135deg, var(--hospital-light-blue) 0%, var(--hospital-white) 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(44, 62, 80, 0.1);
+}
+
+.generated-credentials {
+    background: linear-gradient(135deg, var(--hospital-light-green) 0%, var(--hospital-white) 100%);
+    border: 2px dashed var(--hospital-success);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    position: relative;
+}
+
+.generated-credentials::before {
+    content: '🔐 Generated Credentials';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: var(--hospital-white);
+    padding: 0 10px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--hospital-success);
+}
+
+.generated-credentials input {
+    background-color: var(--hospital-white);
+    border: 1px solid var(--hospital-success);
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    color: var(--hospital-dark);
+}
+
+.generated-credentials input:focus {
+    border-color: var(--hospital-success);
+    box-shadow: 0 0 0 0.2rem rgba(39, 174, 96, 0.25);
+}
+
+.copy-btn {
+    background: var(--hospital-success);
+    border: none;
+    color: var(--hospital-white);
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: var(--hospital-dark);
+    transform: scale(1.05);
+}
+
+.copy-btn:active {
+    transform: scale(0.95);
+}
+
+/* Enhanced Alert Styles */
+.alert.position-fixed {
+    box-shadow: 0 10px 30px rgba(44, 62, 80, 0.2);
+    border: none;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.alert-success {
+    border-left: 4px solid var(--hospital-success);
+    background: linear-gradient(135deg, rgba(39, 174, 96, 0.1) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.alert-danger {
+    border-left: 4px solid var(--hospital-danger);
+    background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.alert-info {
+    border-left: 4px solid var(--hospital-info);
+    background: linear-gradient(135deg, rgba(23, 162, 184, 0.1) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+/* Form Field Animations */
+.form-control, .form-select {
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.2);
+}
+
+/* Department Field Animation */
+#departmentField {
+    transition: all 0.3s ease;
+}
+
+#departmentField.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+}
+
+/* Staff Table Enhancements */
+.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background: linear-gradient(135deg, var(--hospital-light-blue) 0%, var(--hospital-white) 100%);
+    transform: scale(1.01);
+    box-shadow: 0 5px 15px rgba(44, 62, 80, 0.1);
+}
+
+/* Role Badge Enhancements */
+.badge {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 0.5rem 0.75rem;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    transform: scale(1.1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive Adjustments for Staff Form */
+@media (max-width: 768px) {
+    .staff-form-section {
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .generated-credentials {
+        padding: 1rem;
+    }
+    
+    .generated-credentials::before {
+        font-size: 0.7rem;
+        left: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .staff-form-section {
+        padding: 0.75rem;
+    }
+    
+    .generated-credentials {
+        padding: 0.75rem;
+    }
+    
+    .alert.position-fixed {
+        min-width: 280px;
+        max-width: 90vw;
+    }
 }

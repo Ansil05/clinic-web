@@ -499,7 +499,8 @@
         function showAppointmentSuccess(appointmentData) {
             // Create success alert
             const successAlert = document.createElement('div');
-            successAlert.className = 'alert alert-success alert-dismissible fade show position-fixed appointment-success-alert';
+            successAlert.className = 'alert alert-success alert-dismissible fade show position-fixed';
+            successAlert.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
             successAlert.innerHTML = `
                 <div class="d-flex align-items-center">
                     <i class="fas fa-check-circle me-2" style="font-size: 1.2rem;"></i>

@@ -191,7 +191,7 @@
               <div class="col-lg-6">
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-white">Recent Activities</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Recent Activities</h6>
                   </div>
                   <div class="card-body">
                     <div class="list-group list-group-flush">
@@ -223,7 +223,7 @@
               <div class="col-lg-6">
                 <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-white">Quick Actions</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Quick Actions</h6>
                   </div>
                   <div class="card-body">
                     <div class="row">
@@ -618,7 +618,8 @@
 
        function showStaffSuccessMessage(staffData) {
          const successAlert = document.createElement('div');
-         successAlert.className = 'alert alert-success alert-dismissible fade show position-fixed staff-success-alert';
+         successAlert.className = 'alert alert-success alert-dismissible fade show position-fixed';
+         successAlert.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 400px; max-width: 500px;';
          successAlert.innerHTML = `
            <div class="d-flex align-items-start">
              <i class="fas fa-check-circle me-2 mt-1" style="font-size: 1.2rem;"></i>
@@ -682,7 +683,8 @@
 
        function showAlert(message, type = 'info') {
          const alert = document.createElement('div');
-         alert.className = `alert alert-${type} alert-dismissible fade show position-fixed responsive-alert`;
+         alert.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+         alert.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
          alert.innerHTML = `
            <div class="d-flex align-items-center">
              <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-triangle' : 'info-circle'} me-2" style="font-size: 1.2rem;"></i>
@@ -697,73 +699,6 @@
              alert.remove(); 
            } 
          }, 5000);
-       }
-
-       // Staff search functionality
-       function searchStaff() {
-         const searchInput = document.getElementById('staffSearchInput');
-         const searchTerm = searchInput.value.toLowerCase().trim();
-         const tableBody = document.getElementById('staffTableBody');
-         const rows = tableBody.getElementsByTagName('tr');
-         
-         let visibleCount = 0;
-         
-         for (let i = 0; i < rows.length; i++) {
-           const row = rows[i];
-           const cells = row.getElementsByTagName('td');
-           
-           if (cells.length === 0) continue; // Skip header row
-           
-           // Get text content from relevant cells (name, role, department, email)
-           const name = cells[0].textContent.toLowerCase();
-           const role = cells[1].textContent.toLowerCase();
-           const department = cells[2].textContent.toLowerCase();
-           const email = cells[3].textContent.toLowerCase();
-           
-           // Check if any field contains the search term
-           const matches = name.includes(searchTerm) || 
-                          role.includes(searchTerm) || 
-                          department.includes(searchTerm) || 
-                          email.includes(searchTerm);
-           
-           if (matches || searchTerm === '') {
-             row.style.display = '';
-             visibleCount++;
-           } else {
-             row.style.display = 'none';
-           }
-         }
-         
-         // Show/hide "no results" message
-         showNoResultsMessage(visibleCount === 0 && searchTerm !== '');
-       }
-       
-       function clearStaffSearch() {
-         const searchInput = document.getElementById('staffSearchInput');
-         searchInput.value = '';
-         searchStaff(); // This will show all rows
-       }
-       
-       function showNoResultsMessage(show) {
-         let noResultsRow = document.getElementById('noResultsRow');
-         
-         if (show) {
-           if (!noResultsRow) {
-             noResultsRow = document.createElement('tr');
-             noResultsRow.id = 'noResultsRow';
-             noResultsRow.innerHTML = `
-               <td colspan="6" class="text-center text-muted py-4">
-                 <i class="fas fa-search me-2"></i>
-                 No staff members found matching your search criteria.
-               </td>
-             `;
-             document.getElementById('staffTableBody').appendChild(noResultsRow);
-           }
-         } else {
-           if (noResultsRow) {
-             noResultsRow.remove();
-           }
-         }
        }
     </script>
   </body>
